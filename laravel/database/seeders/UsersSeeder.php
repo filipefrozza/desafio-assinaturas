@@ -37,15 +37,52 @@ class UsersSeeder extends Seeder
         
         $role = Role::create(['name' => 'user']);
         
+        $role->givePermissionTo('users.info');
+        $role->givePermissionTo('assinaturas.info');
+        $role->givePermissionTo('faturas.info');
+        
         $user = User::create([
             'name' => 'Test user',
             'email' => 'test@example.com',
             'username' => 'test',
-            'codigo' => 'c321546',
+            'codigo' => '000001',
             'telefone' => '11999999999',
             'password' => Hash::make('password')
         ]);
      
+        $user->assignRole([$role->id]);
+        
+        $user = User::create([
+            'name' => 'Cliente basico',
+            'email' => 'cliente.basico@example.com',
+            'username' => 'cliente.basico',
+            'codigo' => '000002',
+            'telefone' => '11999999998',
+            'password' => Hash::make('password')
+        ]);
+        
+        $user->assignRole([$role->id]);
+        
+        $user = User::create([
+            'name' => 'Cliente padrão',
+            'email' => 'cliente.padrao@example.com',
+            'username' => 'cliente.padrao',
+            'codigo' => '000003',
+            'telefone' => '11999999997',
+            'password' => Hash::make('password')
+        ]);
+        
+        $user->assignRole([$role->id]);
+        
+        $user = User::create([
+            'name' => 'Cliente premium',
+            'email' => 'cliente.premium@example.com',
+            'username' => 'cliente.premium',
+            'codigo' => '000004',
+            'telefone' => '11999999996',
+            'password' => Hash::make('password')
+        ]);
+        
         $user->assignRole([$role->id]);
     }
 }

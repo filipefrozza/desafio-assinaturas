@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Assinatura;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function assinaturas()
+    {
+        return $this->hasMany(Assinatura::class, 'user_id', 'id');
+    }
 }
