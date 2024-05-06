@@ -45,3 +45,36 @@ Abra uma [issue](https://github.com/dourasoft/desafio-assinaturas/issues/new)
 Ou envie um email para: **paulo@dourasoft.com.br**
 
 Boa sorte! 💪
+
+
+----
+
+# códigos para preparar o servidor (precisa estar com um banco up e uma database chamada 'desafio-assinaturas'):
+
+-> na pasta laravel
+- php artisan migrate
+- php artisan passport:install
+- php artisan permission:create-permission-routes
+- php artisan db:seed --class=UsersSeeder
+- php artisan db:seed --class=AssinaturasSeeder
+- php artisan db:seed --class=FaturasSeeder
+
+# códigos para teste unitário
+
+-> na pasta laravel
+- ./vendor/bin/phpunit
+
+# códigos para o docker (não ajustado totalmente)
+
+- docker-compose build
+- docker-compose up
+
+- VERIFICAR NOS LOGS SE O CÓDIGO DE MIGRATE RODOU CORRETAMENTE
+- ACONSELHO DEPOIS DE FAZER UP UMA VEZ, PARAR OS CONTAINERS E RODAR NOVAMENTE (APÓS 5 MINUTOS UP) PARA EVITAR BUGS
+
+# códigos para rodar laravel + react na máquina local sem docker (rodar os códigos que preparam o servidor antes de iniciar)
+
+- abrir um servidor mysql porta 3306 com uma database chamada 'desafio-assinaturas'
+- na pasta laravel rodar: php artisan serve
+
+- laravel irá rodar na porta 8000
