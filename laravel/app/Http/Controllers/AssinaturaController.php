@@ -22,6 +22,7 @@ class AssinaturaController extends Controller
         $assinatura->save();
         return response()->json([
             'message' => 'Assinatura criada com sucesso',
+            'assinatura' => $assinatura
         ], 201);
     }
     
@@ -61,7 +62,7 @@ class AssinaturaController extends Controller
             $assinatura->save();
             return response()->json([
                 'message' => 'Assinatura atualizada',
-            ], 200);
+            ], 201);
         } 
         else 
         {

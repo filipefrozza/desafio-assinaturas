@@ -25,7 +25,7 @@ class UserController extends Controller
             "token" => $token
         ];
         
-        return response($response, 201);
+        return response($response, 200);
     }
     
     function list()
@@ -46,11 +46,14 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->codigo = $request->codigo;
+        $user->telefone = $request->telefone;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->save();
         return response()->json([
-            "message" => "Usuário criado"
+            "message" => "Usuário criado",
+            "user" => $user
         ], 201);
     }
     
@@ -96,10 +99,12 @@ class UserController extends Controller
             $user->name = is_null($request->name) ? $user->name : $request->name;
             $user->email = is_null($request->email) ? $user->email : $request->email;
             $user->password = is_null($request->password) ? $user->password : Hash::make($request->password);
+            $user->codigo = $request->codigo;
+            $user->telefone = $request->telefone;
             $user->save();
             return response()->json([
                 "message" => "Usuário atualizado"
-            ], 200);
+            ], 201);
         } 
         else 
         {

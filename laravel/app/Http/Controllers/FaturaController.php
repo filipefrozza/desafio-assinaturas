@@ -47,9 +47,13 @@ class FaturaController extends Controller
         $fatura->data_pagamento = $request->data_pagamento;
         $fatura->pago = $request->pago;
         $fatura->cancelado = $request->cancelado;
+        $fatura->codigo_barra = $request->codigo_barra;
         $fatura->valor = $request->valor;
         $fatura->save();
-        return response()->json($fatura);
+        return response()->json([
+            'message' => 'Fatura criada com sucesso',
+            'fatura' => $fatura
+        ], 201);
     }
     
     public function update(Request $request, $id)
@@ -64,11 +68,12 @@ class FaturaController extends Controller
             $fatura->data_pagamento = is_null($request->data_pagamento) ? $fatura->data_pagamento : $request->data_pagamento;
             $fatura->pago = is_null($request->pago) ? $fatura->pago : $request->pago;
             $fatura->cancelado = is_null($request->cancelado) ? $fatura->cancelado : $request->cancelado;
+            $fatura->codigo_barra = $request->codigo_barra;
             $fatura->valor = is_null($request->valor) ? $fatura->valor : $request->valor;
             $fatura->save();
             return response()->json([
                 "message" => "Fatura atualizada"
-            ], 200);
+            ], 201);
         } 
         else 
         {
