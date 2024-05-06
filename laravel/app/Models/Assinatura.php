@@ -14,11 +14,21 @@ class Assinatura extends Model
     protected $fillable = ['user_id', 'descricao', 'valor', 'ativo', 'data_vencimento'];
     
     
+    /**
+     * Retrieve the associated user for the assinatura.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     
+    /**
+     * Retrieve the associated faturas for the assinatura.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function faturas()
     {
         return $this->hasMany(Fatura::class, 'fatura_id', 'id');

@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Logs in a user based on the provided Request.
+     *
+     * @param Request $request The request containing user credentials.
+     * @return JsonResponse The JSON response with user information and token.
+     */
     function login( Request $request )
     {
         $user = User::where('email', $request->email)->orWhere('username', $request->email)->first();
@@ -28,12 +34,23 @@ class UserController extends Controller
         return response($response, 200);
     }
     
+    /**
+     * Retrieves a list of all users and returns it as a JSON response.
+     *
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the list of users.
+     */
     function list()
     {
         $users = User::all();
         return response()->json($users);
     }
     
+    /**
+     * Retrieves the user information based on the authenticated user's ID.
+     *
+     * @param Request $request The HTTP request object.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the user information.
+     */
     function info(Request $request)
     {
         $user = User::find($request->user()->id);
@@ -41,6 +58,12 @@ class UserController extends Controller
         return response()->json($user);
     }
     
+    /**
+     * Store a new user in the database.
+     *
+     * @param Request $request The HTTP request containing the user data.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the created user and a success message.
+     */
     function store(Request $request)
     {
         $user = new User;
@@ -57,6 +80,12 @@ class UserController extends Controller
         ], 201);
     }
     
+    /**
+     * Deletes a user from the database.
+     *
+     * @param int $id The ID of the user to be deleted.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating the success or failure of the deletion.
+     */
     function destroy($id)
     {
         if(User::where('id', $id)->exists())
@@ -76,6 +105,12 @@ class UserController extends Controller
         }
     }
     
+    /**
+     * Retrieves a user by their ID and returns them as a JSON response.
+     *
+     * @param int $id The ID of the user to be retrieved.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the user, or a JSON response with a "Usuário não encontrado" message and a 404 status code if the user is not found.
+     */
     function show($id)
     {
         $user = User::find($id);
@@ -91,6 +126,13 @@ class UserController extends Controller
         }
     }
     
+    /**
+     * Updates a user in the database based on the provided ID.
+     *
+     * @param Request $request The HTTP request containing the updated user data.
+     * @param int $id The ID of the user to be updated.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing a message indicating the success or failure of the update.
+     */
     function update(Request $request, $id)
     {
         if(User::where('id', $id)->exists())

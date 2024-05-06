@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Call the Generate Fatura command every day
         $schedule->command('fatura:gerar-fatura')->daily();
     }
 

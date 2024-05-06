@@ -14,11 +14,21 @@ class Fatura extends Model
     protected $fillable = ['user_id', 'assinatura_id', 'descricao', 'data_vencimento', 'pago', 'cancelado', 'data_pagamento', 'codigo_barra', 'valor'];
     
     
+    /**
+     * Retrieve the associated assinatura for the fatura.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function assinatura()
     {
         return $this->belongsTo(Assinatura::class, 'assinatura_id', 'id');
     }
     
+    /**
+     * Retrieve the user that owns the Fatura.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

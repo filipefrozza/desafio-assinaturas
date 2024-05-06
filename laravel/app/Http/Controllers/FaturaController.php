@@ -7,12 +7,23 @@ use App\Models\Fatura;
 
 class FaturaController extends Controller
 {
+    /**
+     * Retrieves all faturas from the database and returns them as a JSON response.
+     *
+     * @return \Illuminate\Http\JsonResponse The JSON response containing all faturas.
+     */
     public function list()
     {
         $faturas = Fatura::all();
         return response()->json($faturas);
     }
     
+    /**
+     * Retrieves a specific fatura by its ID and returns it as a JSON response.
+     *
+     * @param int $id The ID of the fatura to retrieve.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the fatura.
+     */
     public function show($id)
     {
         if(Fatura::where('id', $id)->exists())
@@ -28,6 +39,12 @@ class FaturaController extends Controller
         }
     }
     
+    /**
+     * Retrieves and returns the faturas associated with the logged in user.
+     *
+     * @param Request $request The HTTP request object.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the faturas.
+     */
     public function info(Request $request)
     {
         $user_id = $request->user()->id;
@@ -37,6 +54,12 @@ class FaturaController extends Controller
         return response()->json($faturas);
     }
     
+    /**
+     * Store a new Fatura in the database.
+     *
+     * @param Request $request The HTTP request containing the Fatura data.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the created Fatura and a success message.
+     */
     public function store(Request $request)
     {
         $fatura = new Fatura;
@@ -56,6 +79,13 @@ class FaturaController extends Controller
         ], 201);
     }
     
+    /**
+     * Updates an existing Fatura based on the provided ID.
+     *
+     * @param Request $request The HTTP request containing the Fatura data.
+     * @param int $id The ID of the Fatura to update.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the updated Fatura and a success message.
+     */
     public function update(Request $request, $id)
     {
         if(Fatura::where('id', $id)->exists())
@@ -83,6 +113,12 @@ class FaturaController extends Controller
         }
     }
     
+    /**
+     * Deletes an Fatura from the database based on the provided ID.
+     *
+     * @param int $id The ID of the Fatura to delete.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the updated Fatura and a success message.
+     */
     public function destroy($id)
     {
         if(Fatura::where('id', $id)->exists())

@@ -39,18 +39,23 @@ class GerarFatura extends Command
      */
     public function handle()
     {
+        // Faturas shoud due in 10 days
         $endDate = now()->addDays(10);
 
+        // Get the Assinaturas to generate the Fatura
         $assinaturas = Assinatura::where('data_vencimento', '<=', $endDate)
                                     ->where('data_vencimento', '>=', now())
                                     ->where('ativo', true)->get();
-                                    
+        
+        // Loop through the Assinaturas 
         foreach ($assinaturas as $assinatura) {
+            // check if there is any faturas to due
             $qtd_faturas = Fatura::where('assinatura_id', $assinatura->id)->where('data_vencimento', ">=", now())->count();
             
             if ($qtd_faturas == 0) {
                 $this->info('Gerando fatura para a assinatura ' . $assinatura->id . ' - ' . $assinatura->descricao);
                 $this->info('Vencimento ' . $assinatura->data_vencimento);
+                // Call the function to generate the fatura
                 $this->generateFatura($assinatura);
                 $this->info('------------------');
             }
@@ -61,6 +66,7 @@ class GerarFatura extends Command
     
     private function generateFatura($assinatura)
     {
+        // Create new Fatura from the Assinatura
         $fatura = new Fatura();
         $fatura->user_id = $assinatura->user_id;
         $fatura->assinatura_id = $assinatura->id;
@@ -68,7 +74,7 @@ class GerarFatura extends Command
         $fatura->descricao = $assinatura->descricao;
         $fatura->codigo_barra = now()->format('YmdHis') . $assinatura->id;
         $fatura->valor = $assinatura->valor;
-        // $fatura->save();
+        $fatura->save();
         
         $this->info('Fatura ' . $fatura->id . ' gerada para a assinatura ' . $assinatura->id . ' - ' . $assinatura->descricao);
         

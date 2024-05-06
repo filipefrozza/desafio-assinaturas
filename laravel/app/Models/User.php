@@ -47,6 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    /**
+     * Retrieve the assinaturas associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function assinaturas()
     {
         return $this->hasMany(Assinatura::class, 'user_id', 'id');
